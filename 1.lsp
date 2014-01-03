@@ -327,3 +327,15 @@
 
 ;;---Ex. 1.18--------------------------------------------------
 
+;; negative integers not supported
+(define (russian-mul a b)
+  (russian-mul-iter a b 0))
+
+(define (russian-mul-iter a counter product)
+  (cond ((= counter 0) product)
+	((even? counter) (russian-mul-iter (double a)
+					   (halve counter)
+					   product))
+	(else (russian-mul-iter a
+				(- counter 1)
+				(+ product a)))))
