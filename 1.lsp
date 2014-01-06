@@ -339,3 +339,32 @@
 	(else (russian-mul-iter a
 				(- counter 1)
 				(+ product a)))))
+
+;;---Ex. 1.19--------------------------------------------------
+
+;; p = 0, q = 1
+;; a' <- bq + aq + ap, b' = bp + aq
+;; b'' <- (bp + aq) * p + (bq + aq + ap) * q
+;; b'' = bpp + apq + bqq + aqq + apq
+;; b'' = b * (pp + qq) + a * (2pq + qq)
+;; so, p' = pp + qq and q' = 2pq + qq
+;; check if it suits expression for a'':
+;; a'' <- (bp + aq) * q + (bq + aq + ap) * q + (bq + aq + ap) * p
+;; a'' = bpq + aqq + bqq + aqq + apq + bpq + apq + app
+;; a'' = b * (2pq + qq) + a * (pp + qq) + a * (2pq + qq)
+
+(define (fib n)
+  (fib-iter 1 0 0 1 n))
+(define (fib-iter a b p q count)
+  (cond ((= count 0) b)
+        ((even? count)
+         (fib-iter a
+                   b
+		   (+ (* p p) (* q q))
+		   (+ (* 2 p q) + (* q q))
+                   (/ count 2)))
+        (else (fib-iter (+ (* b q) (* a q) (* a p))
+                        (+ (* b p) (* a q))
+                        p
+                        q
+                        (- count 1)))))
